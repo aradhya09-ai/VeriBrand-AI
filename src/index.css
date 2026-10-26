@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b1020;
+  --bg-soft: #111827;
+  --card: #151d30;
+  --elevated: #1c2740;
+  --accent: #6366f1;
+  --accent-2: #22d3ee;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --ok: #22c55e;
+  --warn: #f59e0b;
+  --bad: #ef4444;
+  --info: #60a5fa;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-base text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: rgba(99, 102, 241, 0.35);
+  }
+  *:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26324d;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #34405e;
+    background-clip: padding-box;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply bg-card/80 border border-white/[0.06] rounded-2xl shadow-card backdrop-blur-xl;
+  }
+  .surface-elevated {
+    @apply bg-card-elevated border border-white/[0.07] rounded-2xl shadow-card;
+  }
+  .glass {
+    background: linear-gradient(
+      160deg,
+      rgba(28, 39, 64, 0.85) 0%,
+      rgba(21, 29, 48, 0.75) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px);
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, #f8fafc 10%, #a5b4fc 55%, #22d3ee 100%);
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed select-none;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white px-4 py-2.5 shadow-[0_10px_30px_-12px_rgba(99,102,241,.9)] hover:bg-[#575bf0] active:scale-[.98];
+  }
+  .btn-secondary {
+    @apply btn bg-white/[0.06] text-ink border border-white/10 px-4 py-2.5 hover:bg-white/[0.1] active:scale-[.98];
+  }
+  .btn-ghost {
+    @apply btn text-ink-muted px-3 py-2 hover:bg-white/[0.06] hover:text-ink;
+  }
+  .btn-danger {
+    @apply btn bg-bad/15 text-bad border border-bad/30 px-4 py-2.5 hover:bg-bad/25;
+  }
+  .field-label {
+    @apply block text-xs font-semibold uppercase tracking-[0.12em] text-ink-muted mb-1.5;
+  }
+  .input {
+    @apply w-full rounded-xl bg-base-soft/80 border border-white/10 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition-colors focus:border-accent/70 focus:bg-base-soft;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border;
+  }
+  .grid-bg {
+    background-image: linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+  .skeleton {
+    @apply rounded-lg bg-white/[0.05];
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.11) 40px,
+      rgba(255, 255, 255, 0.04) 80px
+    );
+    background-size: 400px 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+  .nav-link {
+    @apply text-sm font-medium text-ink-muted hover:text-ink transition-colors;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .animate-in-view {
+    animation: fadeUp 0.6s cubic-bezier(0.22, 0.8, 0.36, 1) both;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #0b1020 !important;
+  }
+  .surface,
+  .surface-elevated,
+  .glass {
+    border: 1px solid #d8dee9 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    color: #0b1020 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
