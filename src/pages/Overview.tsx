@@ -32,7 +32,7 @@ const FILTERS = [
 
 const RISK_TONE: Record<string, string> = {
   critical: "text-bad",
-  high: "text-[#f87171]",
+  high: "text-alert",
   medium: "text-warn",
   low: "text-info",
   informational: "text-ink-muted",
@@ -98,7 +98,7 @@ export default function Overview() {
         {cards.map((c) => (
           <Link key={c.label} to={c.to} className="surface group p-5 transition-all hover:-translate-y-0.5 hover:border-accent/35">
             <div className="flex items-start justify-between">
-              <span className={cn("flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.05]", c.tone)}>
+              <span className={cn("flex h-10 w-10 items-center justify-center rounded-xl bg-panel", c.tone)}>
                 <c.icon size={19} />
               </span>
               <ArrowRight size={15} className="text-ink-muted opacity-0 transition-opacity group-hover:opacity-100" />
@@ -113,7 +113,7 @@ export default function Overview() {
       <div className="grid gap-6 xl:grid-cols-3">
         {/* recent audits */}
         <section className="surface overflow-hidden xl:col-span-2">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-5 py-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4">
             <div>
               <h2 className="text-base font-semibold text-ink">Recent audits</h2>
               <p className="text-xs text-ink-muted">Latest content submitted for review in this workspace</p>
@@ -121,7 +121,7 @@ export default function Overview() {
             <div className="flex items-center gap-2 text-ink-muted">
               <Filter size={14} />
               <select
-                className="rounded-lg border border-white/10 bg-base-soft px-2.5 py-1.5 text-xs text-ink"
+                className="rounded-lg border border-line bg-base-soft px-2.5 py-1.5 text-xs text-ink"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
                 aria-label="Filter audits by status"
@@ -137,7 +137,7 @@ export default function Overview() {
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06] text-[11px] uppercase tracking-[0.1em] text-ink-muted">
+                <tr className="border-b border-line text-[11px] uppercase tracking-[0.1em] text-ink-muted">
                   <th className="px-5 py-3 font-semibold">Content</th>
                   <th className="px-3 py-3 font-semibold">Type</th>
                   <th className="px-3 py-3 font-semibold">Date</th>
@@ -153,7 +153,7 @@ export default function Overview() {
                   const reviewer = state.users.find((u) => u.id === a.reviewerId);
                   const high = a.findings.filter((f) => f.severity === "critical" || f.severity === "high").length;
                   return (
-                    <tr key={a.id} className="border-b border-white/[0.05] transition-colors last:border-0 hover:bg-white/[0.03]">
+                    <tr key={a.id} className="border-b border-line transition-colors last:border-0 hover:bg-panel">
                       <td className="px-5 py-3.5">
                         <p className="font-medium text-ink">{a.title}</p>
                         <p className="text-xs text-ink-muted">{a.campaignName ?? brand?.name ?? "Brand content"}</p>
@@ -180,9 +180,9 @@ export default function Overview() {
           </div>
 
           {/* mobile cards */}
-          <div className="divide-y divide-white/[0.05] md:hidden">
+          <div className="divide-y divide-line md:hidden">
             {filtered.map((a) => (
-              <Link key={a.id} to={`/app/audits/${a.id}`} className="block px-5 py-4 hover:bg-white/[0.03]">
+              <Link key={a.id} to={`/app/audits/${a.id}`} className="block px-5 py-4 hover:bg-panel">
                 <div className="flex items-start justify-between gap-3">
                   <p className="font-medium text-ink">{a.title}</p>
                   <StatusBadge status={a.status} />
@@ -219,7 +219,7 @@ export default function Overview() {
                   disabled={q.disabled}
                   title={q.disabled ? q.reason : undefined}
                   className={cn(
-                    "flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 text-left text-sm transition-colors",
+                    "flex items-center gap-3 rounded-xl border border-line bg-panel px-4 py-3 text-left text-sm transition-colors",
                     q.disabled ? "cursor-not-allowed opacity-50" : "hover:border-accent/40 hover:bg-accent/[0.06]",
                   )}
                 >
@@ -252,7 +252,7 @@ export default function Overview() {
                 { k: "Documents", v: `${state.documents.filter((d) => d.extracted).length} extracted` },
                 { k: "Facts needing review", v: `${state.facts.filter((f) => (f.expiresAt && +new Date(f.expiresAt) < Date.now()) || f.verificationStatus !== "verified").length}` },
               ].map((row) => (
-                <div key={row.k} className="flex items-center justify-between gap-3 border-b border-white/[0.05] pb-2 last:border-0">
+                <div key={row.k} className="flex items-center justify-between gap-3 border-b border-line pb-2 last:border-0">
                   <dt className="text-ink-muted">{row.k}</dt>
                   <dd className="font-medium text-ink">{row.v}</dd>
                 </div>
@@ -289,21 +289,21 @@ export default function Overview() {
 
       {/* findings needing attention */}
       <section className="surface overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-5 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4">
           <div>
             <h2 className="text-base font-semibold text-ink">Open findings needing attention</h2>
             <p className="text-xs text-ink-muted">High-impact findings that are still unresolved</p>
           </div>
           <Tag size={15} className="text-ink-muted" />
         </div>
-        <div className="divide-y divide-white/[0.05]">
+        <div className="divide-y divide-line">
           {audits
             .flatMap((a) => a.findings.map((f) => ({ a, f })))
             .filter(({ f }) => f.reviewStatus === "open" && f.verificationStatus !== "SUPPORTED")
             .sort((x, y) => (x.f.severity === "critical" ? -1 : y.f.severity === "critical" ? 1 : 0))
             .slice(0, 5)
             .map(({ a, f }) => (
-              <Link key={f.id} to={`/app/audits/${a.id}?finding=${f.id}`} className="flex flex-wrap items-center gap-3 px-5 py-3.5 transition-colors hover:bg-white/[0.03]">
+              <Link key={f.id} to={`/app/audits/${a.id}?finding=${f.id}`} className="flex flex-wrap items-center gap-3 px-5 py-3.5 transition-colors hover:bg-panel">
                 <SeverityBadge severity={f.severity} />
                 <VerificationBadge status={f.verificationStatus} />
                 <span className="min-w-0 flex-1 truncate text-sm text-ink">{f.originalExcerpt}</span>

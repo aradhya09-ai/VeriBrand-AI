@@ -101,7 +101,7 @@ export default function TruthTrace() {
                   onClick={() => { setActiveExample(ex.label); trace(ex.claim); }}
                   className={cn(
                     "w-full rounded-xl border p-3 text-left transition-colors",
-                    activeExample === ex.label ? "border-accent/50 bg-accent/10" : "border-white/[0.08] bg-white/[0.02] hover:border-white/20",
+                    activeExample === ex.label ? "border-accent/50 bg-accent/10" : "border-line bg-panel hover:border-line",
                   )}
                 >
                   <span className="flex items-center justify-between gap-2">
@@ -122,7 +122,7 @@ export default function TruthTrace() {
                 <button
                   key={finding.id}
                   onClick={() => trace(finding.originalExcerpt)}
-                  className="flex w-full items-start gap-2 rounded-lg border border-white/[0.07] bg-white/[0.02] p-2.5 text-left hover:border-white/20"
+                  className="flex w-full items-start gap-2 rounded-lg border border-line bg-panel p-2.5 text-left hover:border-line"
                 >
                   <VerificationBadge status={finding.verificationStatus} />
                   <span className="min-w-0 flex-1">
@@ -167,7 +167,7 @@ export default function TruthTrace() {
                     </p>
                     <div className="mt-2 space-y-2">
                       {result.evidence.filter((e) => e.type !== "none").map((e, i) => (
-                        <div key={i} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+                        <div key={i} className="rounded-xl border border-line bg-panel p-3">
                           <p className="text-sm font-medium text-ink">{e.label}</p>
                           {e.sourceLabel && <p className="text-xs text-ink-muted">Source: {e.sourceLabel}</p>}
                           {e.passage && <blockquote className="mt-1.5 border-l-2 border-accent/60 pl-3 text-xs italic text-ink-muted">{e.passage}</blockquote>}
@@ -185,7 +185,7 @@ export default function TruthTrace() {
                     <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
                       <Target size={12} /> Reasoning
                     </p>
-                    <p className="mt-2 rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 text-sm leading-relaxed text-ink">
+                    <p className="mt-2 rounded-xl border border-line bg-panel p-3 text-sm leading-relaxed text-ink">
                       {result.reasoning}
                     </p>
                   </section>

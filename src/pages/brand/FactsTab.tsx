@@ -229,7 +229,7 @@ export default function FactsTab({ active }: { active: boolean }) {
                   </div>
                 </div>
 
-                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-white/[0.06] pt-3 text-[11px]">
+                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-line pt-3 text-[11px]">
                   <div>
                     <dt className="text-ink-muted">Category</dt>
                     <dd className="font-medium text-ink">{f.category}</dd>
@@ -313,7 +313,7 @@ export default function FactsTab({ active }: { active: boolean }) {
               </Field>
             </div>
 
-            <div className="flex justify-end gap-3 border-t border-white/[0.07] pt-4">
+            <div className="flex justify-end gap-3 border-t border-line pt-4">
               <button className="btn-secondary" onClick={() => setDraft(null)}>Cancel</button>
               <button className="btn-primary" onClick={save}><Check size={15} /> Save fact</button>
             </div>

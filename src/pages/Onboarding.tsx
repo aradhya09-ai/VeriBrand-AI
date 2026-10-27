@@ -152,7 +152,7 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-base">
-      <header className="border-b border-white/[0.06] bg-base/80 backdrop-blur-xl">
+      <header className="border-b border-line bg-base/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-2.5">
             <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
@@ -183,7 +183,7 @@ export default function Onboarding() {
               key={s.key}
               onClick={() => i <= step && setStep(i)}
               className={`flex flex-col items-start gap-1 rounded-xl border px-3 py-2.5 text-left transition-colors ${
-                i === step ? "border-accent/50 bg-accent/10" : i < step ? "border-ok/30 bg-ok/[0.06]" : "border-white/[0.07] bg-white/[0.02]"
+                i === step ? "border-accent/50 bg-accent/10" : i < step ? "border-ok/30 bg-ok/[0.06]" : "border-line bg-panel"
               } ${i > step ? "cursor-not-allowed opacity-60" : ""}`}
             >
               <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">
@@ -275,7 +275,7 @@ export default function Onboarding() {
                 <SampleBadge note="Optional step" />
               </div>
 
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+              <div className="rounded-xl border border-line bg-panel p-4">
                 <p className="mb-3 text-sm font-semibold text-ink">Add a brand rule</p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <input className="input" placeholder="Rule title" value={ruleDraft.title} onChange={(e) => setRuleDraft({ ...ruleDraft, title: e.target.value })} aria-label="Rule title" />
@@ -303,7 +303,7 @@ export default function Onboarding() {
                 {rules.length > 0 && (
                   <ul className="mt-3 space-y-2">
                     {rules.map((r, i) => (
-                      <li key={i} className="flex items-start justify-between gap-3 rounded-lg border border-white/[0.07] bg-card/60 px-3 py-2 text-sm">
+                      <li key={i} className="flex items-start justify-between gap-3 rounded-lg border border-line bg-card/60 px-3 py-2 text-sm">
                         <span>
                           <b className="text-ink">{r.title}</b>
                           <span className="block text-xs text-ink-muted">{r.category} · {r.severity}</span>
@@ -317,7 +317,7 @@ export default function Onboarding() {
                 )}
               </div>
 
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+              <div className="rounded-xl border border-line bg-panel p-4">
                 <p className="mb-3 text-sm font-semibold text-ink">Add an approved fact</p>
                 <div className="grid gap-3 sm:grid-cols-3">
                   <input className="input" placeholder="Fact title" value={factDraft.title} onChange={(e) => setFactDraft({ ...factDraft, title: e.target.value })} aria-label="Fact title" />
@@ -340,7 +340,7 @@ export default function Onboarding() {
                 {facts.length > 0 && (
                   <ul className="mt-3 space-y-2">
                     {facts.map((f, i) => (
-                      <li key={i} className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.07] bg-card/60 px-3 py-2 text-sm">
+                      <li key={i} className="flex items-center justify-between gap-3 rounded-lg border border-line bg-card/60 px-3 py-2 text-sm">
                         <span><b className="text-ink">{f.title}</b> <span className="text-ink-muted">— {f.value}</span></span>
                         <button className="text-ink-muted hover:text-bad" onClick={() => setFacts(facts.filter((_, j) => j !== i))} aria-label={`Remove ${f.title}`}>
                           <Trash2 size={15} />
@@ -351,7 +351,7 @@ export default function Onboarding() {
                 )}
               </div>
 
-              <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+              <div className="rounded-xl border border-line bg-panel p-4">
                 <p className="mb-3 text-sm font-semibold text-ink">Required disclaimer</p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <input className="input flex-1" placeholder="Prices include VAT and may change without notice." value={disclaimerDraft} onChange={(e) => setDisclaimerDraft(e.target.value)} aria-label="Disclaimer text" />
@@ -382,7 +382,7 @@ export default function Onboarding() {
                 <SampleBadge note="Optional step" />
               </div>
 
-              <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.02] px-6 py-10 text-center transition-colors hover:border-accent/50 hover:bg-accent/[0.04]">
+              <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-panel px-6 py-10 text-center transition-colors hover:border-accent/50 hover:bg-accent/[0.04]">
                 <Upload size={22} className="text-accent" />
                 <span className="mt-2 text-sm font-semibold text-ink">Drop files here or click to browse</span>
                 <span className="mt-1 text-xs text-ink-muted">Logos, colour palettes, typography references</span>
@@ -392,7 +392,7 @@ export default function Onboarding() {
               {assets.length > 0 && (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {assets.map((a, i) => (
-                    <div key={i} className="group relative overflow-hidden rounded-xl border border-white/10 bg-card/60">
+                    <div key={i} className="group relative overflow-hidden rounded-xl border border-line bg-card/60">
                       <img src={a.dataUrl} alt={a.name} className="h-24 w-full object-cover" />
                       <div className="flex items-center justify-between gap-2 px-2 py-1.5">
                         <span className="truncate text-[11px] text-ink-muted">{a.name}</span>
@@ -424,7 +424,7 @@ export default function Onboarding() {
                   { label: "Disclaimers", value: `${disclaimers.length}`, sub: disclaimers[0]?.text.slice(0, 60) || "None yet" },
                   { label: "Assets", value: `${assets.length}`, sub: assets.map((a) => a.name).slice(0, 2).join(", ") || "None uploaded" },
                 ].map((c) => (
-                  <div key={c.label} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
+                  <div key={c.label} className="rounded-xl border border-line bg-panel p-4">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">{c.label}</p>
                     <p className="mt-1 truncate text-base font-semibold text-ink">{c.value}</p>
                     <p className="mt-0.5 truncate text-xs text-ink-muted">{c.sub}</p>
@@ -444,7 +444,7 @@ export default function Onboarding() {
             <p role="alert" className="mt-4 rounded-lg border border-bad/30 bg-bad/10 px-3 py-2 text-sm text-bad">{error}</p>
           )}
 
-          <div className="mt-6 flex items-center justify-between gap-3 border-t border-white/[0.07] pt-5">
+          <div className="mt-6 flex items-center justify-between gap-3 border-t border-line pt-5">
             <button className="btn-ghost" onClick={() => (step === 0 ? navigate("/app") : setStep((s) => s - 1))}>
               <ArrowLeft size={15} /> {step === 0 ? "Dashboard" : "Back"}
             </button>

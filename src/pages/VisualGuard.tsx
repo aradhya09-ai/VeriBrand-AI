@@ -198,7 +198,7 @@ export default function VisualGuard() {
       ? "border-ok/35 bg-ok/10 text-ok"
       : kind === "potential"
         ? "border-warn/35 bg-warn/10 text-warn"
-        : "border-white/15 bg-white/5 text-ink-muted";
+        : "border-line bg-panel text-ink-muted";
 
   return (
     <div className="mx-auto max-w-[1200px] space-y-5">
@@ -219,7 +219,7 @@ export default function VisualGuard() {
       <label
         className={cn(
           "flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-12 text-center transition-colors",
-          can("edit_brand") ? "border-white/15 bg-white/[0.02] hover:border-accent/50 hover:bg-accent/[0.04]" : "cursor-not-allowed opacity-60",
+          can("edit_brand") ? "border-line bg-panel hover:border-accent/50 hover:bg-accent/[0.04]" : "cursor-not-allowed opacity-60",
         )}
       >
         <UploadCloud size={26} className="text-accent" />
@@ -248,7 +248,7 @@ export default function VisualGuard() {
       {current && (
         <div className="grid gap-5 lg:grid-cols-2">
           <div className="surface overflow-hidden">
-            <div className="border-b border-white/[0.07] px-5 py-3">
+            <div className="border-b border-line px-5 py-3">
               <p className="text-sm font-semibold text-ink">{current.filename}</p>
               <p className="text-xs text-ink-muted">
                 {current.width}×{current.height} · {current.format} · {(current.size / 1024).toFixed(0)} KB · {formatDateTime(current.at)}
@@ -258,10 +258,10 @@ export default function VisualGuard() {
             <div className="flex flex-wrap items-center gap-2 p-4">
               <span className="text-[11px] uppercase tracking-wide text-ink-muted">Dominant colours</span>
               {current.dominantColors.map((c) => (
-                <span key={c} className="h-6 w-6 rounded-md border border-white/10" style={{ background: c }} title={c} />
+                <span key={c} className="h-6 w-6 rounded-md border border-line" style={{ background: c }} title={c} />
               ))}
             </div>
-            <div className="flex items-center justify-between gap-3 border-t border-white/[0.07] px-5 py-3">
+            <div className="flex items-center justify-between gap-3 border-t border-line px-5 py-3">
               <span className="text-xs text-ink-muted">Human review: {current.humanReview}</span>
               <button
                 className="btn-secondary !py-1.5 !text-xs"
@@ -315,7 +315,7 @@ export default function VisualGuard() {
           <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-ink"><Layers size={15} /> Previous analyses</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {state.visuals.map((v) => (
-              <button key={v.id} onClick={() => setCurrent(v)} className="overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.02] text-left hover:border-accent/40">
+              <button key={v.id} onClick={() => setCurrent(v)} className="overflow-hidden rounded-xl border border-line bg-panel text-left hover:border-accent/40">
                 <img src={v.dataUrl} alt={v.filename} className="h-24 w-full object-cover" />
                 <div className="p-2.5">
                   <p className="truncate text-xs font-medium text-ink">{v.filename}</p>

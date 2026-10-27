@@ -90,7 +90,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
         <label
           className={cn(
             "flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-9 text-center transition-colors",
-            editable ? "border-white/15 bg-white/[0.02] hover:border-accent/50 hover:bg-accent/[0.04]" : "cursor-not-allowed border-white/10 bg-white/[0.02] opacity-60",
+            editable ? "border-line bg-panel hover:border-accent/50 hover:bg-accent/[0.04]" : "cursor-not-allowed border-line bg-panel opacity-60",
           )}
         >
           <UploadCloud size={22} className={editable ? "text-accent" : "text-ink-muted"} />
@@ -130,7 +130,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
           <div className="surface overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06] text-[11px] uppercase tracking-[0.1em] text-ink-muted">
+                <tr className="border-b border-line text-[11px] uppercase tracking-[0.1em] text-ink-muted">
                   <th className="px-5 py-3 font-semibold">Document</th>
                   <th className="px-3 py-3 font-semibold">Uploaded</th>
                   <th className="px-3 py-3 font-semibold">Processing</th>
@@ -141,7 +141,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
               </thead>
               <tbody>
                 {docs.map((d) => (
-                  <tr key={d.id} className="border-b border-white/[0.05] last:border-0">
+                  <tr key={d.id} className="border-b border-line last:border-0">
                     <td className="px-5 py-3.5">
                       <p className="font-medium text-ink">{d.filename}</p>
                       <p className="text-xs uppercase text-ink-muted">{d.kind} · {(d.size / 1024).toFixed(0)} KB {d.isSample && "· sample"}</p>
@@ -187,7 +187,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
         <Modal open={!!previewDoc} onClose={() => setPreviewDoc(null)} title={previewDoc?.filename ?? "Document preview"} size="lg">
           <div className="max-h-[60vh] space-y-3 overflow-y-auto">
             {previewDoc?.passages.map((p) => (
-              <div key={p.id} className="rounded-lg border border-white/[0.07] bg-white/[0.03] p-3">
+              <div key={p.id} className="rounded-lg border border-line bg-panel p-3">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-accent">{p.ref}</p>
                 <p className="mt-1 text-sm leading-relaxed text-ink">{p.text}</p>
               </div>
@@ -206,7 +206,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
         <label
           className={cn(
             "flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-9 text-center transition-colors",
-            editable ? "border-white/15 bg-white/[0.02] hover:border-accent/50" : "cursor-not-allowed opacity-60",
+            editable ? "border-line bg-panel hover:border-accent/50" : "cursor-not-allowed opacity-60",
           )}
         >
           <ImageIcon size={22} className="text-accent" />
@@ -226,7 +226,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
                 ) : a.palette ? (
                   <div className="flex h-36 w-full items-center justify-center gap-2 bg-base-soft">
                     {a.palette.map((c) => (
-                      <span key={c} className="h-16 w-16 rounded-xl border border-white/10" style={{ background: c }} title={c} />
+                      <span key={c} className="h-16 w-16 rounded-xl border border-line" style={{ background: c }} title={c} />
                     ))}
                   </div>
                 ) : (
@@ -292,8 +292,8 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
                   <p className="mt-1 text-xs text-ink-muted">{d.when}</p>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     <SeverityBadge severity={d.severity} />
-                    <span className="chip border-white/15 bg-white/5 text-ink-muted">{d.mandatory ? "mandatory" : "optional"}</span>
-                    {d.appliesTo.length > 0 && <span className="chip border-white/15 bg-white/5 text-ink-muted">{d.appliesTo.length} content type(s)</span>}
+                    <span className="chip border-line bg-panel text-ink-muted">{d.mandatory ? "mandatory" : "optional"}</span>
+                    {d.appliesTo.length > 0 && <span className="chip border-line bg-panel text-ink-muted">{d.appliesTo.length} content type(s)</span>}
                     {d.isSample && <SampleBadge />}
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default function MediaTab({ active, tab }: { active: boolean; tab: "docum
                 </select>
               </Field>
             </div>
-            <div className="flex justify-end gap-3 border-t border-white/[0.07] pt-4">
+            <div className="flex justify-end gap-3 border-t border-line pt-4">
               <button className="btn-secondary" onClick={() => setDisclaimerDraft(null)}>Cancel</button>
               <button
                 className="btn-primary"

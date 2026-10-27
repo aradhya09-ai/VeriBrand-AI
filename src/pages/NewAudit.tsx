@@ -157,10 +157,10 @@ export default function NewAudit() {
             onClick={() => (o.key === "sample" ? loadSample() : setMode(o.key))}
             className={cn(
               "flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors",
-              mode === o.key ? "border-accent/60 bg-accent/10" : "border-white/[0.08] bg-white/[0.02] hover:border-white/20",
+              mode === o.key ? "border-accent/60 bg-accent/10" : "border-line bg-panel hover:border-line",
             )}
           >
-            <span className={cn("flex h-9 w-9 items-center justify-center rounded-lg", mode === o.key ? "bg-accent text-white" : "bg-white/5 text-ink-muted")}>
+            <span className={cn("flex h-9 w-9 items-center justify-center rounded-lg", mode === o.key ? "bg-accent text-white" : "bg-panel text-ink-muted")}>
               <o.icon size={16} />
             </span>
             <span>
@@ -200,7 +200,7 @@ export default function NewAudit() {
           <Field label="Content" htmlFor="a-body" required hint={`${content.trim().length} characters`}>
             {mode === "upload" ? (
               <div className="space-y-3">
-                <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.02] px-6 py-8 text-center hover:border-accent/50">
+                <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-panel px-6 py-8 text-center hover:border-accent/50">
                   <UploadCloud size={22} className="text-accent" />
                   <span className="mt-2 text-sm font-semibold text-ink">Upload PDF, TXT or DOCX</span>
                   <span className="mt-1 text-xs text-ink-muted">Max 5 MB · extracted in your browser</span>
@@ -227,7 +227,7 @@ export default function NewAudit() {
           )}
         </div>
 
-        <div className="mt-5 border-t border-white/[0.07] pt-4">
+        <div className="mt-5 border-t border-line pt-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold text-ink">Audit settings</p>
             <span className="text-xs text-ink-muted">{checks.length} of {ALL_CHECKS.length} checks selected</span>
@@ -242,7 +242,7 @@ export default function NewAudit() {
                   aria-pressed={on}
                   className={cn(
                     "flex items-start gap-3 rounded-xl border px-3.5 py-2.5 text-left transition-colors",
-                    on ? "border-accent/40 bg-accent/[0.08]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/20",
+                    on ? "border-accent/40 bg-accent/[0.08]" : "border-line bg-panel hover:border-line",
                   )}
                 >
                   <span className={cn("mt-0.5", on ? "text-accent" : "text-ink-muted")}>{on ? <CheckCircle2 size={16} /> : <Circle size={16} />}</span>
@@ -256,7 +256,7 @@ export default function NewAudit() {
           </div>
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-4">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
           <div className="text-xs text-ink-muted">
             <p>References available: <b className="text-ink">{activeRules}</b> active rules · <b className="text-ink">{facts}</b> approved facts · <b className="text-ink">{state.documents.filter((d) => d.extracted).length}</b> extracted documents</p>
             <p className="mt-0.5">No AI provider is configured — analysis runs on the deterministic rule engine in this browser.</p>
@@ -275,7 +275,7 @@ export default function NewAudit() {
           <ol className="mt-3 space-y-2">
             {STAGES.map((s, i) => (
               <li key={s} className="flex items-center gap-3 text-sm">
-                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full border", i < stage ? "border-ok/50 bg-ok/15 text-ok" : i === stage ? "border-accent bg-accent/15 text-accent" : "border-white/15 text-ink-muted")}>
+                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full border", i < stage ? "border-ok/50 bg-ok/15 text-ok" : i === stage ? "border-accent bg-accent/15 text-accent" : "border-line text-ink-muted")}>
                   {i < stage ? <CheckCircle2 size={13} /> : i === stage ? <Spinner size={12} /> : i + 1}
                 </span>
                 <span className={i <= stage ? "text-ink" : "text-ink-muted"}>{s}</span>

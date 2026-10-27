@@ -2,20 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------ */
+/* Dark theme (default) — premium indigo-on-navy                       */
+/* Color variables are space-separated RGB channels so Tailwind can     */
+/* apply opacity modifiers via rgb(var(--x) / <alpha-value>).           */
+/* Translucent helpers (--line, --panel, --panel-2, --faint, --track,   */
+/* --shadow-*) hold a complete CSS color and are used without modifiers.*/
+/* ------------------------------------------------------------------ */
 :root {
-  --bg: #0b1020;
-  --bg-soft: #111827;
-  --card: #151d30;
-  --elevated: #1c2740;
-  --accent: #6366f1;
-  --accent-2: #22d3ee;
-  --text: #f8fafc;
-  --muted: #94a3b8;
-  --ok: #22c55e;
-  --warn: #f59e0b;
-  --bad: #ef4444;
-  --info: #60a5fa;
+  --bg: 11 16 32; /* #0B1020 */
+  --bg-soft: 17 24 39; /* #111827 */
+  --card: 21 29 48; /* #151D30 */
+  --elevated: 28 39 64; /* #1C2740 */
+  --text: 248 250 252; /* #F8FAFC */
+  --muted: 148 163 184; /* #94A3B8 */
+  --accent: 99 102 241; /* #6366F1 */
+  --accent-2: 34 211 238; /* #22D3EE */
+  --accent-hover: 87 91 240; /* #575BF0 */
+  --ok: 34 197 94; /* #22C55E */
+  --warn: 245 158 11; /* #F59E0B */
+  --bad: 239 68 68; /* #EF4444 */
+  --alert: 248 113 113; /* #F87171 */
+  --info: 96 165 250; /* #60A5FA */
+
+  --line: rgba(255, 255, 255, 0.08);
+  --panel: rgba(255, 255, 255, 0.045);
+  --panel-2: rgba(255, 255, 255, 0.085);
+  --faint: rgba(248, 250, 252, 0.07);
+  --track: #1c2740;
+  --focus: #22d3ee;
+  --scroll-thumb: #26324d;
+  --scroll-thumb-hover: #34405e;
+
+  --shadow-card: 0 1px 2px rgba(2, 6, 23, 0.4), 0 12px 32px -16px rgba(2, 6, 23, 0.8);
+  --shadow-glow: 0 0 0 1px rgba(99, 102, 241, 0.25), 0 18px 50px -24px rgba(99, 102, 241, 0.55);
+
   color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/* Light theme — lavender surfaces, white cards, indigo accents        */
+/* ------------------------------------------------------------------ */
+[data-theme="light"] {
+  --bg: 245 243 253; /* #F5F4FD lavender page */
+  --bg-soft: 255 255 255; /* #FFFFFF */
+  --card: 255 255 255;
+  --elevated: 252 251 255; /* #FCFBFF */
+  --text: 24 20 53; /* #181435 deep indigo */
+  --muted: 92 86 117; /* #5C5675 */
+  --accent: 79 70 229; /* #4F46E5 */
+  --accent-2: 8 145 178; /* #0891B2 */
+  --accent-hover: 67 56 202; /* #4338CA */
+  --ok: 21 128 61; /* #15803D */
+  --warn: 180  83 9; /* #B45309 */
+  --bad: 185 28 28; /* #B91C1C */
+  --alert: 220 38 38; /* #DC2626 */
+  --info: 37 99 235; /* #2563EB */
+
+  --line: rgba(79, 70, 229, 0.16);
+  --panel: rgba(79, 70, 229, 0.05);
+  --panel-2: rgba(79, 70, 229, 0.09);
+  --faint: rgba(24, 20, 53, 0.1);
+  --track: #e7e3f7;
+  --focus: #4f46e5;
+  --scroll-thumb: #c9c3ee;
+  --scroll-thumb-hover: #b3abE4;
+
+  --shadow-card: 0 1px 2px rgba(79, 70, 229, 0.06), 0 14px 34px -18px rgba(79, 70, 229, 0.28);
+  --shadow-glow: 0 0 0 1px rgba(79, 70, 229, 0.28), 0 18px 50px -26px rgba(79, 70, 229, 0.45);
+
+  color-scheme: light;
 }
 
 @layer base {
@@ -28,10 +84,10 @@
     text-rendering: optimizeLegibility;
   }
   ::selection {
-    background: rgba(99, 102, 241, 0.35);
+    background: rgb(var(--accent) / 0.3);
   }
   *:focus-visible {
-    outline: 2px solid var(--accent-2);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
     border-radius: 6px;
   }
@@ -48,48 +104,72 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #26324d;
+    background: var(--scroll-thumb);
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #34405e;
+    background: var(--scroll-thumb-hover);
     background-clip: padding-box;
   }
 }
 
 @layer components {
   .surface {
-    @apply bg-card/80 border border-white/[0.06] rounded-2xl shadow-card backdrop-blur-xl;
+    @apply bg-card/80 border border-line rounded-2xl shadow-card backdrop-blur-xl;
   }
   .surface-elevated {
-    @apply bg-card-elevated border border-white/[0.07] rounded-2xl shadow-card;
+    @apply bg-card-elevated border border-line rounded-2xl shadow-card;
   }
   .glass {
-    background: linear-gradient(
-      160deg,
-      rgba(28, 39, 64, 0.85) 0%,
-      rgba(21, 29, 48, 0.75) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: color-mix(in srgb, rgb(var(--elevated)) 85%, transparent);
+    border: 1px solid var(--line);
     backdrop-filter: blur(18px);
+  }
+  [data-theme="light"] .glass {
+    background: color-mix(in srgb, rgb(var(--card)) 82%, transparent);
+    border-color: var(--line);
   }
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(100deg, #f8fafc 10%, #a5b4fc 55%, #22d3ee 100%);
   }
+  [data-theme="light"] .text-gradient {
+    background-image: linear-gradient(100deg, #181435 8%, #4f46e5 55%, #0891b2 100%);
+  }
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed select-none;
   }
   .btn-primary {
-    @apply btn bg-accent text-white px-4 py-2.5 shadow-[0_10px_30px_-12px_rgba(99,102,241,.9)] hover:bg-[#575bf0] active:scale-[.98];
+    @apply btn bg-accent text-white px-4 py-2.5 shadow-[0_10px_30px_-12px_rgba(99,102,241,.9)] active:scale-[.98];
+    background-color: rgb(var(--accent));
+    background-image: linear-gradient(
+      180deg,
+      rgb(var(--accent) / 1) 0%,
+      rgb(var(--accent) / 0.92) 100%
+    );
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    background-image: linear-gradient(
+      180deg,
+      rgb(var(--accent-hover)) 0%,
+      rgb(var(--accent-hover) / 0.92) 100%
+    );
   }
   .btn-secondary {
-    @apply btn bg-white/[0.06] text-ink border border-white/10 px-4 py-2.5 hover:bg-white/[0.1] active:scale-[.98];
+    @apply btn bg-panel text-ink border border-line px-4 py-2.5 active:scale-[.98];
+  }
+  .btn-secondary:hover {
+    background-color: var(--panel-2);
   }
   .btn-ghost {
-    @apply btn text-ink-muted px-3 py-2 hover:bg-white/[0.06] hover:text-ink;
+    @apply btn text-ink-muted px-3 py-2;
+  }
+  .btn-ghost:hover {
+    background-color: var(--panel-2);
+    color: rgb(var(--text));
   }
   .btn-danger {
     @apply btn bg-bad/15 text-bad border border-bad/30 px-4 py-2.5 hover:bg-bad/25;
@@ -98,29 +178,55 @@
     @apply block text-xs font-semibold uppercase tracking-[0.12em] text-ink-muted mb-1.5;
   }
   .input {
-    @apply w-full rounded-xl bg-base-soft/80 border border-white/10 px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-muted/60 transition-colors focus:border-accent/70 focus:bg-base-soft;
+    @apply w-full rounded-xl bg-base-soft border border-line px-3.5 py-2.5 text-sm text-ink transition-colors focus:border-accent/70;
+    background-color: rgb(var(--bg-soft) / 0.8);
+    box-shadow: inset 0 1px 2px rgb(var(--bg) / 0.35);
+  }
+  [data-theme="light"] .input {
+    background-color: rgb(var(--bg-soft) / 1);
+    box-shadow: inset 0 1px 2px rgba(79, 70, 229, 0.05);
+  }
+  .input:focus {
+    background-color: rgb(var(--bg-soft));
+  }
+  .input::placeholder {
+    color: rgb(var(--muted) / 0.75);
   }
   .chip {
     @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border;
   }
   .grid-bg {
-    background-image: linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
+    background-image: linear-gradient(rgb(var(--accent) / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--accent) / 0.07) 1px, transparent 1px);
     background-size: 46px 46px;
   }
+  [data-theme="light"] .grid-bg {
+    background-image: linear-gradient(rgb(var(--accent) / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--accent) / 0.1) 1px, transparent 1px);
+  }
   .skeleton {
-    @apply rounded-lg bg-white/[0.05];
+    @apply rounded-lg bg-panel;
     background-image: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.04) 0px,
-      rgba(255, 255, 255, 0.11) 40px,
-      rgba(255, 255, 255, 0.04) 80px
+      rgb(var(--panel)) 0px,
+      rgb(var(--panel-2)) 40px,
+      rgb(var(--panel)) 80px
     );
     background-size: 400px 100%;
     animation: shimmer 1.6s linear infinite;
   }
   .nav-link {
     @apply text-sm font-medium text-ink-muted hover:text-ink transition-colors;
+  }
+  /* Final call-to-action panel on the landing page */
+  .cta-panel {
+    background: linear-gradient(
+      145deg,
+      rgb(var(--elevated)) 0%,
+      rgb(var(--card)) 55%,
+      rgb(var(--bg-soft)) 100%
+    );
+    border: 1px solid var(--line);
   }
 }
 
@@ -147,7 +253,8 @@
   }
   .surface,
   .surface-elevated,
-  .glass {
+  .glass,
+  .cta-panel {
     border: 1px solid #d8dee9 !important;
     background: #ffffff !important;
     box-shadow: none !important;

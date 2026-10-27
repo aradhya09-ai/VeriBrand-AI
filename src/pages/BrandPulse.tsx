@@ -4,6 +4,7 @@ import { CalendarRange, Info, TrendingUp } from "lucide-react";
 import { computePulse, type PulseFilters } from "../lib/analytics";
 import { useApp } from "../lib/store";
 import { EmptyState, InlineNotice, SampleBadge, SectionHeader } from "../components/ui";
+import { useTheme } from "../lib/theme";
 import { cn, titleCase } from "../lib/utils";
 
 const SEV_COLORS: Record<string, string> = {
@@ -19,16 +20,22 @@ const VER_COLORS: Record<string, string> = {
   CONTRADICTED: "#EF4444",
 };
 
-const tooltipStyle = {
-  backgroundColor: "#1C2740",
-  border: "1px solid rgba(255,255,255,.1)",
-  borderRadius: 10,
-  color: "#F8FAFC",
-  fontSize: 12,
-};
-
 export default function BrandPulse() {
   const { state, isSampleWorkspace } = useApp();
+  const [theme] = useTheme();
+  const light = theme === "light";
+
+  // Chart chrome follows the active theme so axes stay legible on both.
+  const tooltipStyle = {
+    backgroundColor: light ? "#FFFFFF" : "#1C2740",
+    border: light ? "1px solid rgba(79,70,229,.18)" : "1px solid rgba(255,255,255,.1)",
+    borderRadius: 10,
+    color: light ? "#181435" : "#F8FAFC",
+    fontSize: 12,
+  } as const;
+  const tickFill = light ? "#5C5675" : "#94A3B8";
+  const gridStroke = light ? "rgba(79,70,229,.16)" : "rgba(148,163,184,.12)";
+
   const [days, setDays] = useState<number | null>(30);
   const [custom, setCustom] = useState({ from: "", to: "" });
   const [campaign, setCampaign] = useState("");
@@ -82,14 +89,14 @@ export default function BrandPulse() {
               <button
                 key={d}
                 onClick={() => { setDays(d); setCustom({ from: "", to: "" }); }}
-                className={cn("chip", days === d ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink")}
+                className={cn("chip", days === d ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink")}
               >
                 Last {d} days
               </button>
             ))}
             <button
               onClick={() => setDays(null)}
-              className={cn("chip", days === null ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink")}
+              className={cn("chip", days === null ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink")}
             >
               <CalendarRange size={11} /> Custom
             </button>
@@ -167,9 +174,9 @@ export default function BrandPulse() {
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={activity} margin={{ top: 6, right: 8, left: -18, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,.12)" />
-              <XAxis dataKey="label" tick={{ fill: "#94A3B8", fontSize: 11 }} tickLine={false} />
-              <YAxis tick={{ fill: "#94A3B8", fontSize: 11 }} tickLine={false} allowDecimals={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+              <XAxis dataKey="label" tick={{ fill: tickFill, fontSize: 11 }} tickLine={false} />
+              <YAxis tick={{ fill: tickFill, fontSize: 11 }} tickLine={false} allowDecimals={false} />
               <Tooltip contentStyle={tooltipStyle} />
               <Legend wrapperStyle={{ fontSize: 12 }} />
               <Line type="monotone" dataKey="audits" name="Audits" stroke="#6366F1" strokeWidth={2} dot={false} />
@@ -189,9 +196,9 @@ export default function BrandPulse() {
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.byCategory} layout="vertical" margin={{ left: 8, right: 12 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,.12)" />
-                  <XAxis type="number" allowDecimals={false} tick={{ fill: "#94A3B8", fontSize: 11 }} />
-                  <YAxis type="category" dataKey="name" width={110} tick={{ fill: "#94A3B8", fontSize: 11 }} tickFormatter={(v) => titleCase(v)} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                  <XAxis type="number" allowDecimals={false} tick={{ fill: tickFill, fontSize: 11 }} />
+                  <YAxis type="category" dataKey="name" width={110} tick={{ fill: tickFill, fontSize: 11 }} tickFormatter={(v) => titleCase(v)} />
                   <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => [v, "Findings"]} labelFormatter={(l) => titleCase(String(l))} />
                   <Bar dataKey="value" fill="#6366F1" radius={[0, 6, 6, 0]} />
                 </BarChart>
@@ -236,7 +243,7 @@ export default function BrandPulse() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+          <div className="mt-3 rounded-xl border border-line bg-panel p-3">
             <p className="text-xs text-ink-muted">
               Resolution: <b className="text-ink">{data.resolution.resolved}</b> resolved · <b className="text-ink">{data.resolution.open}</b> open ·{" "}
               <b className="text-ink">{data.resolution.percent}%</b> of findings in range.
@@ -255,7 +262,7 @@ export default function BrandPulse() {
                   <span className="w-5 text-sm font-bold text-ink-muted">{i + 1}</span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-ink">{r.title}</p>
-                    <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-panel-2">
                       <div className="h-full rounded-full bg-gradient-to-r from-accent to-accent-cyan" style={{ width: `${(r.count / data.topRules[0].count) * 100}%` }} />
                     </div>
                   </div>
@@ -280,7 +287,7 @@ export default function BrandPulse() {
                 "rounded-xl border p-3.5 text-sm leading-relaxed",
                 ins.tone === "warning" ? "border-warn/30 bg-warn/[0.07] text-ink"
                   : ins.tone === "positive" ? "border-ok/30 bg-ok/[0.07] text-ink"
-                    : "border-white/[0.07] bg-white/[0.03] text-ink-muted",
+                    : "border-line bg-panel text-ink-muted",
               )}
             >
               {ins.text}

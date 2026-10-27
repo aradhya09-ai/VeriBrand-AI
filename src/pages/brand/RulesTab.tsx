@@ -248,9 +248,9 @@ export default function RulesTab({ active }: { active: boolean }) {
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-ink">{r.title}</p>
                     <div className="mt-1.5 flex flex-wrap gap-2">
-                      <span className="chip border-white/15 bg-white/5 text-ink-muted">{r.category}</span>
+                      <span className="chip border-line bg-panel text-ink-muted">{r.category}</span>
                       <SeverityBadge severity={r.severity} />
-                      <span className="chip border-white/15 bg-white/5 text-ink-muted">
+                      <span className="chip border-line bg-panel text-ink-muted">
                         confidence {Math.round((r.confidence ?? 0.5) * 100)}%
                       </span>
                     </div>
@@ -268,7 +268,7 @@ export default function RulesTab({ active }: { active: boolean }) {
                   </div>
                 </div>
                 {r.sourcePassage && (
-                  <blockquote className="mt-3 border-l-2 border-accent/60 bg-white/[0.03] px-3 py-2 text-xs italic text-ink-muted">
+                  <blockquote className="mt-3 border-l-2 border-accent/60 bg-panel px-3 py-2 text-xs italic text-ink-muted">
                     Source passage: “{r.sourcePassage}”
                   </blockquote>
                 )}
@@ -287,12 +287,12 @@ export default function RulesTab({ active }: { active: boolean }) {
       ) : (
         <div className="space-y-3">
           {shown.map((r) => (
-            <article key={r.id} className="surface p-4 transition-colors hover:border-white/10">
+            <article key={r.id} className="surface p-4 transition-colors hover:border-line">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-[15px] font-semibold text-ink">{r.title}</h3>
-                    <span className="chip border-white/15 bg-white/5 text-ink-muted">{r.category}</span>
+                    <span className="chip border-line bg-panel text-ink-muted">{r.category}</span>
                     <SeverityBadge severity={r.severity} />
                     <span
                       className={cn(
@@ -301,7 +301,7 @@ export default function RulesTab({ active }: { active: boolean }) {
                           ? "border-ok/35 bg-ok/10 text-ok"
                           : r.status === "draft"
                             ? "border-info/35 bg-info/10 text-info"
-                            : "border-white/15 bg-white/5 text-ink-muted",
+                            : "border-line bg-panel text-ink-muted",
                       )}
                     >
                       {r.status}
@@ -419,7 +419,7 @@ export default function RulesTab({ active }: { active: boolean }) {
                       }
                       className={cn(
                         "chip transition-colors",
-                        on ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink",
+                        on ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink",
                       )}
                       aria-pressed={on}
                     >
@@ -429,7 +429,7 @@ export default function RulesTab({ active }: { active: boolean }) {
                 })}
               </div>
             </Field>
-            <div className="flex justify-end gap-3 border-t border-white/[0.07] pt-4">
+            <div className="flex justify-end gap-3 border-t border-line pt-4">
               <button className="btn-secondary" onClick={() => setEditing(null)}>Cancel</button>
               <button className="btn-primary" onClick={save}>
                 <Check size={15} /> Save rule
@@ -462,10 +462,10 @@ export default function RulesTab({ active }: { active: boolean }) {
           </div>
 
           {suggestions.length > 0 && (
-            <div className="space-y-3 border-t border-white/[0.07] pt-4">
+            <div className="space-y-3 border-t border-line pt-4">
               <p className="text-sm font-semibold text-ink">Review {suggestions.length} suggestion(s)</p>
               {suggestions.map((s, i) => (
-                <div key={i} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
+                <div key={i} className="rounded-xl border border-line bg-panel p-3">
                   <input
                     className="input mb-2"
                     value={s.title}

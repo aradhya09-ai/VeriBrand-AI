@@ -15,7 +15,7 @@ import { InlineNotice, Modal, SeverityBadge, VerificationBadge, useConfirm, useT
 function EvidenceRow({ label, value, tone }: { label: string; value?: React.ReactNode; tone?: string }) {
   if (!value) return null;
   return (
-    <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+    <div className="rounded-xl border border-line bg-panel p-3">
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">{label}</p>
       <div className={cn("mt-1 text-sm leading-relaxed", tone ?? "text-ink")}>{value}</div>
     </div>
@@ -93,13 +93,13 @@ export default function EvidencePanel({
   return (
     <div className="fixed inset-0 z-[85] flex justify-end" role="dialog" aria-modal="true" aria-label="Finding evidence">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <aside className="relative flex h-full w-full max-w-xl animate-slideIn flex-col border-l border-white/10 bg-card-elevated shadow-card">
-        <header className="flex items-start justify-between gap-3 border-b border-white/[0.07] px-5 py-4">
+      <aside className="relative flex h-full w-full max-w-xl animate-slideIn flex-col border-l border-line bg-card-elevated shadow-card">
+        <header className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <SeverityBadge severity={finding.severity} />
               <VerificationBadge status={finding.verificationStatus} />
-              <span className="chip border-white/15 bg-white/5 text-ink-muted">{finding.category.replace(/_/g, " ")}</span>
+              <span className="chip border-line bg-panel text-ink-muted">{finding.category.replace(/_/g, " ")}</span>
             </div>
             <p className="mt-2 text-[11px] text-ink-muted">Finding {finding.id} · review status: {finding.reviewStatus.replace(/_/g, " ")}</p>
           </div>
@@ -132,10 +132,10 @@ export default function EvidencePanel({
             value={finding.suggestedAction ?? (finding.suggestedCorrection ? `Apply: “${finding.suggestedCorrection}”` : undefined)}
           />
 
-          <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+          <div className="rounded-xl border border-line bg-panel p-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Confidence</p>
             <div className="mt-2 flex items-center gap-3">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-panel-2">
                 <div className="h-full rounded-full bg-gradient-to-r from-accent to-accent-cyan" style={{ width: `${Math.round(finding.confidence * 100)}%` }} />
               </div>
               <span className="text-sm font-semibold text-ink">{Math.round(finding.confidence * 100)}%</span>
@@ -158,7 +158,7 @@ export default function EvidencePanel({
           )}
 
           {/* comments */}
-          <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+          <div className="rounded-xl border border-line bg-panel p-3">
             <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
               <MessageSquare size={12} /> Reviewer comments ({finding.comments.length})
             </p>
@@ -202,7 +202,7 @@ export default function EvidencePanel({
           </div>
 
           {/* assignment */}
-          <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+          <div className="rounded-xl border border-line bg-panel p-3">
             <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
               <UserCheck size={12} /> Assigned reviewer
             </p>
@@ -224,7 +224,7 @@ export default function EvidencePanel({
           </div>
         </div>
 
-        <footer className="border-t border-white/[0.07] px-5 py-4">
+        <footer className="border-t border-line px-5 py-4">
           {!editable ? (
             <InlineNotice tone="warning">{denyReason("run_audit")}</InlineNotice>
           ) : (

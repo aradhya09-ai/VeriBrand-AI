@@ -16,13 +16,13 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "../lib/utils";
+import { ThemeToggle } from "../components/ui";
 
 const NAV = [
   { label: "Product", href: "#product" },
   { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how" },
   { label: "Security", href: "#security" },
-  { label: "Pricing", href: "#pricing" },
 ];
 
 const TRUST = [
@@ -83,39 +83,7 @@ const FEATURES = [
     body: "Upload marketing creative to check dimensions, palette proximity and basic readability observations.",
     to: "/app/visual",
   },
-];
-
-const PLANS = [
-  {
-    name: "Starter",
-    price: "$0",
-    period: "for evaluation",
-    blurb: "Explore the full workflow with the sample workspace.",
-    features: ["1 workspace", "Sample Nova Bottle brand", "Audits, rewrites and approvals", "CSV and JSON exports"],
-    cta: "Start free",
-    highlight: false,
-  },
-  {
-    name: "Team",
-    price: "$49",
-    period: "per workspace / month",
-    blurb: "For marketing teams publishing every week.",
-    features: ["Unlimited audits", "Brand rules, facts and documents", "ApprovalFlow with roles", "Campaign consistency checks", "BrandPulse analytics"],
-    cta: "Start your first audit",
-    highlight: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "annual agreement",
-    blurb: "For organisations with governance and residency requirements.",
-    features: ["SSO and role enforcement", "Private model routing", "Retention controls", "Audit log exports"],
-    cta: "Talk to us",
-    highlight: false,
-  },
-];
-
-function Logo({ size = 30 }: { size?: number }) {
+];function Logo({ size = 30 }: { size?: number }) {
   return (
     <span className="inline-flex items-center gap-2.5">
       <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
@@ -141,7 +109,7 @@ function HeroPreview() {
     <div className="relative">
       <div className="absolute -inset-6 rounded-[28px] bg-gradient-to-br from-accent/25 via-transparent to-accent-cyan/20 blur-2xl" aria-hidden="true" />
       <div className="glass relative rounded-2xl p-4 shadow-glow sm:p-5">
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="flex items-center justify-between border-b border-line pb-3">
           <div className="flex items-center gap-2">
             <span className="h-2.5 w-2.5 rounded-full bg-bad/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-warn/70" />
@@ -154,7 +122,7 @@ function HeroPreview() {
         <div className="grid gap-4 pt-4 sm:grid-cols-5">
           <div className="sm:col-span-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Submitted content</p>
-            <p className="mt-2 rounded-xl border border-white/10 bg-base-soft/70 p-3 text-[13px] leading-relaxed text-ink">
+            <p className="mt-2 rounded-xl border border-line bg-base-soft/70 p-3 text-[13px] leading-relaxed text-ink">
               Meet the Nova Bottle, our{" "}
               <span className="rounded bg-bad/20 px-1 text-bad underline decoration-bad/50 decoration-dotted underline-offset-2">1-litre insulated bottle</span>{" "}
               that keeps drinks cold for{" "}
@@ -194,17 +162,17 @@ function HeroPreview() {
           </div>
 
           <div className="space-y-3 sm:col-span-2">
-            <div className="rounded-xl border border-white/10 bg-base-soft/70 p-3 text-center">
+            <div className="rounded-xl border border-line bg-base-soft/70 p-3 text-center">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Brand compliance</p>
               <div className="relative mx-auto mt-2 h-24 w-24">
                 <svg viewBox="0 0 120 120" className="h-24 w-24 -rotate-90">
-                  <circle cx="60" cy="60" r="52" fill="none" stroke="#1C2740" strokeWidth="12" />
+                  <circle cx="60" cy="60" r="52" fill="none" style={{ stroke: "var(--track)" }} strokeWidth="12" />
                   <circle
                     cx="60"
                     cy="60"
                     r="52"
                     fill="none"
-                    stroke="#6366F1"
+                    style={{ stroke: "rgb(var(--accent))" }}
                     strokeWidth="12"
                     strokeLinecap="round"
                     strokeDasharray={`${2 * Math.PI * 52}`}
@@ -219,7 +187,7 @@ function HeroPreview() {
               <p className="mt-2 text-[11px] leading-snug text-ink-muted">Explainable: severity-weighted findings</p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-base-soft/70 p-3">
+            <div className="rounded-xl border border-line bg-base-soft/70 p-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Fact check</p>
               <ul className="mt-2 space-y-1.5 text-[12px]">
                 <li className="flex items-center justify-between text-bad">
@@ -267,7 +235,7 @@ export default function Landing() {
       <header
         className={cn(
           "sticky top-0 z-50 transition-all duration-300",
-          scrolled ? "border-b border-white/[0.07] bg-base/85 backdrop-blur-xl" : "border-b border-transparent",
+          scrolled ? "border-b border-line bg-base/85 backdrop-blur-xl" : "border-b border-transparent",
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
@@ -284,6 +252,7 @@ export default function Landing() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle />
             <Link to="/signin" className="btn-ghost">
               Sign In
             </Link>
@@ -303,14 +272,15 @@ export default function Landing() {
         </div>
 
         {open && (
-          <div className="border-t border-white/[0.07] bg-base/95 px-4 py-4 backdrop-blur-xl lg:hidden">
+          <div className="border-t border-line bg-base/95 px-4 py-4 backdrop-blur-xl lg:hidden">
             <nav className="flex flex-col gap-1" aria-label="Mobile">
               {NAV.map((n) => (
-                <a key={n.label} href={n.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-white/5 hover:text-ink">
+                <a key={n.label} href={n.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-panel hover:text-ink">
                   {n.label}
                 </a>
               ))}
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex items-center gap-3">
+                <ThemeToggle />
                 <Link to="/signin" className="btn-secondary flex-1" onClick={() => setOpen(false)}>
                   Sign In
                 </Link>
@@ -357,13 +327,13 @@ export default function Landing() {
           </div>
 
           {/* trust */}
-          <div className="mt-16 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 sm:p-6">
+          <div className="mt-16 rounded-2xl border border-line bg-panel p-5 sm:p-6">
             <p className="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted">
               Built on four commitments
             </p>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {TRUST.map((t) => (
-                <li key={t} className="flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-card/60 px-3.5 py-3 text-sm text-ink">
+                <li key={t} className="flex items-center gap-2.5 rounded-xl border border-line bg-card/60 px-3.5 py-3 text-sm text-ink">
                   <Check size={15} className="shrink-0 text-ok" />
                   {t}
                 </li>
@@ -385,7 +355,7 @@ export default function Landing() {
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {STEPS.map((s) => (
               <li key={s.n} className="surface group relative overflow-hidden p-5 transition-transform duration-300 hover:-translate-y-1">
-                <span className="text-4xl font-black text-white/[0.06] transition-colors group-hover:text-accent/25">{s.n}</span>
+                <span className="text-4xl font-black text-faint transition-colors group-hover:text-accent/25">{s.n}</span>
                 <h3 className="mt-2 text-sm font-semibold text-ink">{s.title}</h3>
                 <p className="mt-1.5 text-[13px] leading-relaxed text-ink-muted">{s.body}</p>
                 <div className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-accent to-accent-cyan opacity-0 transition-opacity group-hover:opacity-100" />
@@ -452,7 +422,7 @@ export default function Landing() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-white/[0.07] bg-base-soft/60 p-5">
+            <div className="rounded-2xl border border-line bg-base-soft/60 p-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Verification statuses</p>
               <div className="mt-4 space-y-3">
                 {[
@@ -460,7 +430,7 @@ export default function Landing() {
                   { s: "NEEDS REVIEW", c: "border-warn/35 bg-warn/10 text-warn", d: "Evidence is missing, ambiguous, outdated or inconclusive. A missing source is never treated as a contradiction." },
                   { s: "CONTRADICTED", c: "border-bad/35 bg-bad/10 text-bad", d: "Approved evidence conflicts with the claim." },
                 ].map((x) => (
-                  <div key={x.s} className="rounded-xl border border-white/[0.07] bg-card/70 p-4">
+                  <div key={x.s} className="rounded-xl border border-line bg-card/70 p-4">
                     <span className={cn("chip", x.c)}>{x.s}</span>
                     <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">{x.d}</p>
                   </div>
@@ -474,51 +444,9 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* pricing */}
-        <section id="pricing" className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-          <div className="max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-cyan">Pricing</p>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Start free, scale when the team does</h2>
-            <p className="mt-2 text-sm text-ink-muted">Illustrative pricing for this demonstration build.</p>
-          </div>
-
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {PLANS.map((p) => (
-              <div
-                key={p.name}
-                className={cn(
-                  "surface relative flex flex-col p-6",
-                  p.highlight && "border-accent/50 shadow-glow",
-                )}
-              >
-                {p.highlight && (
-                  <span className="chip absolute -top-3 left-6 border-accent/40 bg-accent text-white">Most popular</span>
-                )}
-                <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-ink-muted">{p.name}</h3>
-                <div className="mt-3 flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-ink">{p.price}</span>
-                  <span className="text-xs text-ink-muted">{p.period}</span>
-                </div>
-                <p className="mt-2 text-sm text-ink-muted">{p.blurb}</p>
-                <ul className="mt-5 flex-1 space-y-2 text-sm">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex gap-2.5 text-ink-muted">
-                      <Check size={15} className="mt-0.5 shrink-0 text-ok" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/signup" className={cn(p.highlight ? "btn-primary mt-6" : "btn-secondary mt-6")}>
-                  {p.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* final CTA */}
         <section className="mx-auto max-w-7xl px-4 pb-20 pt-6 sm:px-6">
-          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-card-elevated via-card to-[#131b33] p-8 text-center sm:p-14">
+          <div className="relative overflow-hidden rounded-3xl border border-line cta-panel p-8 text-center sm:p-14">
             <div className="absolute -top-24 left-1/2 h-64 w-[560px] -translate-x-1/2 rounded-full bg-accent/25 blur-[100px]" aria-hidden="true" />
             <h2 className="relative text-3xl font-bold tracking-tight sm:text-4xl">Make Every Brand Message Count.</h2>
             <p className="relative mx-auto mt-3 max-w-xl text-sm text-ink-muted sm:text-base">
@@ -537,7 +465,7 @@ export default function Landing() {
       </main>
 
       {/* footer */}
-      <footer className="border-t border-white/[0.07] bg-base-soft/40">
+      <footer className="border-t border-line bg-base-soft/40">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Logo />
@@ -572,7 +500,7 @@ export default function Landing() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/[0.06] py-5">
+        <div className="border-t border-line py-5">
           <p className="mx-auto max-w-7xl px-4 text-xs text-ink-muted sm:px-6">
             © {new Date().getFullYear()} VeriBrand AI. Verification results are decision support, not a guarantee of
             legal compliance or factual accuracy.

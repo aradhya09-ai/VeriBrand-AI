@@ -74,7 +74,7 @@ export default function BrandStudio() {
         actions={
           <>
             {isSampleWorkspace && <SampleBadge note="Sample brand" />}
-            <span className="chip border-white/15 bg-white/5 text-ink-muted">
+            <span className="chip border-line bg-panel text-ink-muted">
               {counts.rules} rules · {counts.facts} facts · {counts.docs} documents
             </span>
           </>
@@ -158,7 +158,7 @@ export default function BrandStudio() {
                   ["Members", `${state.memberships.filter((m) => m.workspaceId === workspace?.id).length}`],
                   ["Created", formatDate(workspace?.createdAt)],
                 ].map(([k, v]) => (
-                  <div key={k} className="flex justify-between gap-3 border-b border-white/[0.05] pb-2 last:border-0">
+                  <div key={k} className="flex justify-between gap-3 border-b border-line pb-2 last:border-0">
                     <dt className="text-ink-muted">{k}</dt>
                     <dd className="truncate font-medium text-ink">{v}</dd>
                   </div>
@@ -179,7 +179,7 @@ export default function BrandStudio() {
                       <span className="text-ink-muted">{r.label}</span>
                       <span className="font-semibold text-ink">{r.value}</span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-panel-2">
                       <div className="h-full rounded-full bg-gradient-to-r from-accent to-accent-cyan" style={{ width: `${Math.min(100, (r.value / Math.max(1, r.total)) * 100)}%` }} />
                     </div>
                   </div>
@@ -210,7 +210,7 @@ export default function BrandStudio() {
           <div className="surface p-5">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold text-ink">Tone sliders</h2>
-              <span className="chip border-white/15 bg-white/5 text-ink-muted">{brand.language}</span>
+              <span className="chip border-line bg-panel text-ink-muted">{brand.language}</span>
             </div>
             <div className="mt-5 space-y-6">
               {SLIDERS.map((s) => {
@@ -312,13 +312,13 @@ export default function BrandStudio() {
             <div className="surface p-5">
               <h2 className="flex items-center gap-2 text-base font-semibold text-ink"><Target size={16} className="text-accent" /> Words policy</h2>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
+                <div className="rounded-xl border border-line bg-panel p-3">
                   <p className="text-[11px] font-semibold uppercase tracking-wide text-ok">Use</p>
                   <ul className="mt-1.5 space-y-1 text-sm text-ink-muted">
                     {brand.wordsToUse.length ? brand.wordsToUse.map((w) => <li key={w}>• {w}</li>) : <li className="text-ink-muted/60">None configured</li>}
                   </ul>
                 </div>
-                <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-3">
+                <div className="rounded-xl border border-line bg-panel p-3">
                   <p className="text-[11px] font-semibold uppercase tracking-wide text-bad">Avoid</p>
                   <ul className="mt-1.5 space-y-1 text-sm text-ink-muted">
                     {brand.wordsAvoid.length ? brand.wordsAvoid.map((w) => <li key={w}>• {w}</li>) : <li className="text-ink-muted/60">None configured</li>}

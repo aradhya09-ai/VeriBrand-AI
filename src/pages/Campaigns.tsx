@@ -151,11 +151,11 @@ export default function Campaigns() {
             const conflicts = conflictsFor(c);
             return (
               <section key={c.id} className="surface overflow-hidden">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-5 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4">
                   <div>
                     <div className="flex items-center gap-2">
                       <h2 className="text-base font-semibold text-ink">{c.name}</h2>
-                      <span className="chip border-white/15 bg-white/5 text-ink-muted">{c.status}</span>
+                      <span className="chip border-line bg-panel text-ink-muted">{c.status}</span>
                       {c.isSample && <SampleBadge />}
                     </div>
                     <p className="text-xs text-ink-muted">Created {formatDate(c.createdAt)} · {audits.length} linked piece(s)</p>
@@ -176,7 +176,7 @@ export default function Campaigns() {
                     <ul className="mt-2 space-y-1.5">
                       {audits.map((a) => (
                         <li key={a.id}>
-                          <Link to={`/app/audits/${a.id}`} className="flex items-center gap-2 rounded-lg border border-white/[0.07] px-3 py-2 text-sm hover:border-accent/40">
+                          <Link to={`/app/audits/${a.id}`} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm hover:border-accent/40">
                             <span className="min-w-0 flex-1 truncate text-ink">{a.title}</span>
                             <span className="text-[11px] text-ink-muted">{a.contentType}</span>
                             <ArrowRight size={12} className="text-ink-muted" />
@@ -227,7 +227,7 @@ export default function Campaigns() {
               {state.audits.map((a) => <option key={a.id} value={a.id}>{a.title}</option>)}
             </select>
           </Field>
-          <div className="flex justify-end gap-3 border-t border-white/[0.07] pt-4">
+          <div className="flex justify-end gap-3 border-t border-line pt-4">
             <button className="btn-secondary" onClick={() => setOpen(false)}>Cancel</button>
             <button className="btn-primary" onClick={create}><CheckCircle2 size={15} /> Create campaign</button>
           </div>

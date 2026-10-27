@@ -81,7 +81,7 @@ export default function InfoPage({ page }: { page: keyof typeof DOCS | "landing"
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`chip ${tab === t.key ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink"}`}
+            className={`chip ${tab === t.key ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink"}`}
           >
             <t.icon size={12} /> {t.label}
           </button>

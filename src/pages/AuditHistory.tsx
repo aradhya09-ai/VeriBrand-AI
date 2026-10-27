@@ -90,7 +90,7 @@ export default function AuditHistory() {
                     </p>
                     <p className="mt-1.5 max-w-3xl text-sm text-ink-muted">{truncate(a.summaryText || a.content, 170)}</p>
                     <div className="mt-2 flex flex-wrap gap-2">
-                      <span className="chip border-white/15 bg-white/5 text-ink-muted">{a.findings.length} findings</span>
+                      <span className="chip border-line bg-panel text-ink-muted">{a.findings.length} findings</span>
                       <span className="chip border-bad/30 bg-bad/10 text-bad">
                         {a.findings.filter((f) => f.verificationStatus === "CONTRADICTED").length} contradicted
                       </span>

@@ -1,29 +1,43 @@
 /** @type {import('tailwindcss').Config} */
+
+// Colors are declared as `rgb(var(--name) / <alpha-value>)` so Tailwind's
+// opacity modifiers (bg-card/80, border-accent/50, ...) keep working while the
+// underlying values switch between the dark and light (lavender) themes in
+// src/index.css. Translucent helper tokens (line/panel/faint) hold a complete
+// color inside the variable and are therefore never used with modifiers.
+const themed = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
         base: {
-          DEFAULT: "#0B1020",
-          soft: "#111827",
+          DEFAULT: themed("bg"),
+          soft: themed("bg-soft"),
         },
         card: {
-          DEFAULT: "#151D30",
-          elevated: "#1C2740",
+          DEFAULT: themed("card"),
+          elevated: themed("elevated"),
         },
         accent: {
-          DEFAULT: "#6366F1",
-          cyan: "#22D3EE",
+          DEFAULT: themed("accent"),
+          cyan: themed("accent-2"),
         },
         ink: {
-          DEFAULT: "#F8FAFC",
-          muted: "#94A3B8",
+          DEFAULT: themed("text"),
+          muted: themed("muted"),
         },
-        ok: "#22C55E",
-        warn: "#F59E0B",
-        bad: "#EF4444",
-        info: "#60A5FA",
+        ok: themed("ok"),
+        warn: themed("warn"),
+        bad: themed("bad"),
+        alert: themed("alert"),
+        info: themed("info"),
+        // Translucent helper tokens — complete colors, no opacity modifiers.
+        line: "var(--line)",
+        panel: "var(--panel)",
+        "panel-2": "var(--panel-2)",
+        faint: "var(--faint)",
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
@@ -35,8 +49,8 @@ export default {
         "3xl": "1.5rem",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(2,6,23,.4), 0 12px 32px -16px rgba(2,6,23,.8)",
-        glow: "0 0 0 1px rgba(99,102,241,.25), 0 18px 50px -24px rgba(99,102,241,.55)",
+        card: "var(--shadow-card)",
+        glow: "var(--shadow-glow)",
       },
       keyframes: {
         fadeUp: {

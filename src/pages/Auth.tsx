@@ -69,7 +69,7 @@ export default function Auth() {
   return (
     <div className="grid min-h-screen bg-base lg:grid-cols-2">
       {/* brand panel */}
-      <div className="relative hidden overflow-hidden border-r border-white/[0.06] p-10 lg:flex lg:flex-col">
+      <div className="relative hidden overflow-hidden border-r border-line p-10 lg:flex lg:flex-col">
         <div className="grid-bg absolute inset-0 opacity-40" aria-hidden="true" />
         <div className="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-accent/25 blur-[130px]" aria-hidden="true" />
         <Link to="/" className="relative flex items-center gap-2.5">

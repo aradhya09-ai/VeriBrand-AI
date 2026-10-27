@@ -22,8 +22,8 @@ const STATUS_TONE: Record<string, string> = {
   approved: "border-ok/35 bg-ok/10 text-ok",
   rejected: "border-bad/35 bg-bad/10 text-bad",
   changes_requested: "border-info/35 bg-info/10 text-info",
-  draft: "border-white/15 bg-white/5 text-ink-muted",
-  archived: "border-white/15 bg-white/5 text-ink-muted",
+  draft: "border-line bg-panel text-ink-muted",
+  archived: "border-line bg-panel text-ink-muted",
 };
 
 function buildChecklist(items: { key: string; label: string; required: boolean }[], audit: ReturnType<typeof useApp>["state"]["audits"][number] | undefined): ChecklistItem[] {
@@ -290,7 +290,7 @@ function ReviewPage({ id }: { id: string }) {
                 { l: "Contradicted", v: audit.findings.filter((f) => f.verificationStatus === "CONTRADICTED").length },
                 { l: "Score", v: audit.score.score ?? "n/a" },
               ].map((s) => (
-                <div key={s.l} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 text-center">
+                <div key={s.l} className="rounded-xl border border-line bg-panel p-3 text-center">
                   <p className="text-xl font-bold text-ink">{s.v}</p>
                   <p className="text-[11px] text-ink-muted">{s.l}</p>
                 </div>
@@ -302,7 +302,7 @@ function ReviewPage({ id }: { id: string }) {
             <ul className="mt-2 space-y-2">
               {audit.findings.filter((f) => f.reviewStatus === "open").map((f) => (
                 <li key={f.id}>
-                  <Link to={`/app/audits/${audit.id}?finding=${f.id}`} className="flex items-center gap-3 rounded-lg border border-white/[0.07] px-3 py-2 text-sm hover:border-accent/40">
+                  <Link to={`/app/audits/${audit.id}?finding=${f.id}`} className="flex items-center gap-3 rounded-lg border border-line px-3 py-2 text-sm hover:border-accent/40">
                     <span className={cn("chip", f.verificationStatus === "CONTRADICTED" ? "border-bad/35 bg-bad/10 text-bad" : "border-warn/35 bg-warn/10 text-warn")}>{f.verificationStatus}</span>
                     <span className="min-w-0 flex-1 truncate text-ink">{f.originalExcerpt}</span>
                     <ArrowRight size={13} className="text-ink-muted" />
@@ -320,7 +320,7 @@ function ReviewPage({ id }: { id: string }) {
             <p className="flex items-center gap-2 text-sm font-semibold text-ink"><MessageSquare size={15} /> Reviewer comments &amp; history</p>
             <ul className="mt-3 space-y-3">
               {approval.comments.map((c) => (
-                <li key={c.id} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+                <li key={c.id} className="rounded-xl border border-line bg-panel p-3">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-sm font-semibold text-ink">{c.authorName} <span className="text-[11px] font-normal uppercase text-ink-muted">{c.role}</span></span>
                     <span className="text-[11px] text-ink-muted">{formatDateTime(c.at)}</span>
@@ -345,7 +345,7 @@ function ReviewPage({ id }: { id: string }) {
               </button>
             </div>
 
-            <div className="mt-5 border-t border-white/[0.07] pt-4">
+            <div className="mt-5 border-t border-line pt-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">Decision history</p>
               <ol className="mt-2 space-y-2">
                 {approval.history.map((h, i) => (
@@ -356,7 +356,7 @@ function ReviewPage({ id }: { id: string }) {
                   </li>
                 ))}
                 {approval.decisions.map((d) => (
-                  <li key={d.id} className="rounded-lg border border-white/[0.07] bg-white/[0.03] p-3 text-sm">
+                  <li key={d.id} className="rounded-lg border border-line bg-panel p-3 text-sm">
                     <p className="font-semibold text-ink">{d.decision === "approve" ? "Approved" : d.decision === "reject" ? "Rejected" : "Changes requested"} by {d.reviewerName} · {formatDateTime(d.at)}</p>
                     {d.comment && <p className="mt-1 text-ink-muted">“{d.comment}”</p>}
                     {d.overrideReason && <p className="mt-1 text-warn">Override reason: {d.overrideReason}</p>}
@@ -375,7 +375,7 @@ function ReviewPage({ id }: { id: string }) {
             <p className="mt-1 text-xs text-ink-muted">Items are never marked complete because a check was skipped.</p>
             <ul className="mt-3 space-y-3">
               {checklist.map((c) => (
-                <li key={c.key} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+                <li key={c.key} className="rounded-xl border border-line bg-panel p-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-ink">
@@ -402,7 +402,7 @@ function ReviewPage({ id }: { id: string }) {
             <p className="text-sm font-semibold text-ink">Workflow status</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {["draft", "audit_completed", "pending_review", "approved", "rejected"].map((s) => (
-                <span key={s} className={cn("chip", approval.status === s ? STATUS_TONE[s] : "border-white/10 bg-white/[0.03] text-ink-muted")}>
+                <span key={s} className={cn("chip", approval.status === s ? STATUS_TONE[s] : "border-line bg-panel text-ink-muted")}>
                   {s.replace(/_/g, " ")}
                 </span>
               ))}

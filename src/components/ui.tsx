@@ -1,7 +1,29 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { AlertOctagon, AlertTriangle, Check, CheckCircle2, Info, Loader2, X, XCircle } from "lucide-react";
+import { AlertOctagon, AlertTriangle, Check, CheckCircle2, Info, Loader2, Moon, Sun, X, XCircle } from "lucide-react";
 import { cn, uid } from "../lib/utils";
+import { useTheme } from "../lib/theme";
 import type { Severity, VerificationStatus } from "../lib/types";
+
+/* ------------------------------ Theme toggle ---------------------- */
+
+export function ThemeToggle({ className }: { className?: string }) {
+  const [theme, setTheme] = useTheme();
+  const isLight = theme === "light";
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isLight ? "dark" : "light")}
+      aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
+      title={isLight ? "Switch to dark theme" : "Switch to light theme"}
+      className={cn(
+        "inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-panel text-ink-muted transition-colors hover:bg-panel-2 hover:text-ink",
+        className,
+      )}
+    >
+      {isLight ? <Moon size={16} /> : <Sun size={16} />}
+    </button>
+  );
+}
 
 /* ------------------------------- Toasts --------------------------- */
 
@@ -55,10 +77,10 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
               role="status"
               className={cn(
                 "pointer-events-auto w-full max-w-md animate-slideIn rounded-xl border px-4 py-3 shadow-card backdrop-blur-xl",
-                t.tone === "success" && "border-ok/30 bg-[#0f2418]/95",
-                t.tone === "error" && "border-bad/30 bg-[#2a1215]/95",
-                t.tone === "warning" && "border-warn/30 static-bg bg-[#2a2110]/95",
-                t.tone === "info" && "border-info/30 bg-[#101c33]/95",
+                t.tone === "success" && "border-ok/40 bg-ok/15",
+                t.tone === "error" && "border-bad/40 bg-bad/15",
+                t.tone === "warning" && "border-warn/40 bg-warn/15",
+                t.tone === "info" && "border-info/40 bg-info/15",
               )}
             >
               <div className="flex items-start gap-3">
@@ -203,7 +225,7 @@ export function Tabs({
   ariaLabel: string;
 }) {
   return (
-    <div role="tablist" aria-label={ariaLabel} className="flex gap-1 overflow-x-auto rounded-xl bg-white/[0.04] p-1 scrollbar-thin">
+    <div role="tablist" aria-label={ariaLabel} className="flex gap-1 overflow-x-auto rounded-xl bg-panel p-1 scrollbar-thin">
       {items.map((it) => (
         <button
           key={it.key}
@@ -218,7 +240,7 @@ export function Tabs({
           {it.icon}
           {it.label}
           {typeof it.badge === "number" && it.badge > 0 && (
-            <span className={cn("rounded-full px-1.5 text-[10px] font-bold", active === it.key ? "bg-white/25" : "bg-white/10")}>
+            <span className={cn("rounded-full px-1.5 text-[10px] font-bold", active === it.key ? "bg-white/25" : "bg-panel-2")}>
               {it.badge}
             </span>
           )}
@@ -248,10 +270,10 @@ export function VerificationBadge({ status, compact }: { status: VerificationSta
 
 const SEV: Record<Severity, { cls: string; dot: string; label: string; icon: React.ReactNode }> = {
   critical: { cls: "border-bad/40 bg-bad/10 text-bad", dot: "bg-bad", label: "Critical", icon: <AlertOctagon size={12} /> },
-  high: { cls: "border-[#f87171]/35 bg-[#f87171]/10 text-[#f87171]", dot: "bg-[#f87171]", label: "High", icon: <AlertTriangle size={12} /> },
+  high: { cls: "border-alert/35 bg-alert/10 text-alert", dot: "bg-alert", label: "High", icon: <AlertTriangle size={12} /> },
   medium: { cls: "border-warn/35 bg-warn/10 text-warn", dot: "bg-warn", label: "Medium", icon: <AlertTriangle size={12} /> },
   low: { cls: "border-info/35 bg-info/10 text-info", dot: "bg-info", label: "Low", icon: <Info size={12} /> },
-  informational: { cls: "border-white/15 bg-white/5 text-ink-muted", dot: "bg-ink-muted", label: "Info", icon: <Info size={12} /> },
+  informational: { cls: "border-line bg-panel text-ink-muted", dot: "bg-ink-muted", label: "Info", icon: <Info size={12} /> },
 };
 
 export function SeverityBadge({ severity }: { severity: Severity }) {
@@ -265,7 +287,7 @@ export function SeverityBadge({ severity }: { severity: Severity }) {
 }
 
 const AUDIT_STATUS: Record<string, { cls: string; label: string }> = {
-  draft: { cls: "border-white/15 bg-white/5 text-ink-muted", label: "Draft" },
+  draft: { cls: "border-line bg-panel text-ink-muted", label: "Draft" },
   in_progress: { cls: "border-info/35 bg-info/10 text-info", label: "In progress" },
   needs_review: { cls: "border-warn/35 bg-warn/10 text-warn", label: "Needs review" },
   approved: { cls: "border-ok/35 bg-ok/10 text-ok", label: "Approved" },
@@ -273,11 +295,11 @@ const AUDIT_STATUS: Record<string, { cls: string; label: string }> = {
   pending_review: { cls: "border-warn/35 bg-warn/10 text-warn", label: "Pending review" },
   changes_requested: { cls: "border-warn/35 bg-warn/10 text-warn", label: "Changes requested" },
   audit_completed: { cls: "border-info/35 bg-info/10 text-info", label: "Audit completed" },
-  archived: { cls: "border-white/15 bg-white/5 text-ink-muted", label: "Archived" },
+  archived: { cls: "border-line bg-panel text-ink-muted", label: "Archived" },
 };
 
 export function StatusBadge({ status }: { status: string }) {
-  const s = AUDIT_STATUS[status] ?? { cls: "border-white/15 bg-white/5 text-ink-muted", label: status };
+  const s = AUDIT_STATUS[status] ?? { cls: "border-line bg-panel text-ink-muted", label: status };
   return <span className={cn("chip whitespace-nowrap", s.cls)}>{s.label}</span>;
 }
 
@@ -296,7 +318,7 @@ export function Progress({ value, label, tone = "accent" }: { value: number; lab
           <span className="font-semibold text-ink">{Math.round(value)}%</span>
         </div>
       )}
-      <div className="h-2 w-full overflow-hidden rounded-full bg-white/10" role="progressbar" aria-valuenow={Math.round(value)} aria-valuemin={0} aria-valuemax={100}>
+      <div className="h-2 w-full overflow-hidden rounded-full bg-panel-2" role="progressbar" aria-valuenow={Math.round(value)} aria-valuemin={0} aria-valuemax={100}>
         <div
           className={cn("h-full rounded-full transition-all duration-500", tone === "ok" ? "bg-ok" : tone === "warn" ? "bg-warn" : "bg-gradient-to-r from-accent to-accent-cyan")}
           style={{ width: `${Math.max(2, Math.min(100, value))}%` }}
@@ -334,7 +356,7 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 bg-white/[0.02] px-6 py-12 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-panel px-6 py-12 text-center">
       <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
         {icon ?? <Info size={22} />}
       </div>
@@ -383,14 +405,14 @@ export function Tooltip({ label, children }: { label: string; children: React.Re
       <button
         type="button"
         aria-label={label}
-        className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[10px] font-bold text-ink-muted transition-colors hover:border-accent hover:text-accent"
+        className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-line text-[10px] font-bold text-ink-muted transition-colors hover:border-accent hover:text-accent"
       >
         ?
       </button>
       {show && (
         <span
           role="tooltip"
-          className="absolute left-1/2 top-full z-50 mt-2 w-64 -translate-x-1/2 rounded-lg border border-white/10 bg-card-elevated px-3 py-2 text-left text-xs font-normal leading-relaxed text-ink-muted shadow-card"
+          className="absolute left-1/2 top-full z-50 mt-2 w-64 -translate-x-1/2 rounded-lg border border-line bg-card-elevated px-3 py-2 text-left text-xs font-normal leading-relaxed text-ink-muted shadow-card"
         >
           {label}
         </span>
@@ -419,7 +441,7 @@ export function Toggle({ checked, onChange, label }: { checked: boolean; onChang
       onClick={() => onChange(!checked)}
       className={cn(
         "relative h-6 w-11 shrink-0 rounded-full border transition-colors",
-        checked ? "border-accent/60 bg-accent" : "border-white/15 bg-white/10",
+        checked ? "border-accent/60 bg-accent" : "border-line bg-panel-2",
       )}
     >
       <span

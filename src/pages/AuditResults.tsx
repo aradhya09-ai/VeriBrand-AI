@@ -218,7 +218,7 @@ export default function AuditResults() {
             <div className="mt-3 flex items-center gap-5">
               <div className="relative h-24 w-24 shrink-0">
                 <svg viewBox="0 0 120 120" className="h-24 w-24 -rotate-90">
-                  <circle cx="60" cy="60" r="52" fill="none" stroke="#1C2740" strokeWidth="12" />
+                  <circle cx="60" cy="60" r="52" fill="none" style={{ stroke: "var(--track)" }} strokeWidth="12" />
                   <circle
                     cx="60" cy="60" r="52" fill="none"
                     stroke={audit.score.score >= 80 ? "#22C55E" : audit.score.score >= 55 ? "#F59E0B" : "#EF4444"}
@@ -237,7 +237,7 @@ export default function AuditResults() {
               </div>
             </div>
           )}
-          <dl className="mt-4 space-y-1.5 border-t border-white/[0.07] pt-3 text-xs">
+          <dl className="mt-4 space-y-1.5 border-t border-line pt-3 text-xs">
             {(audit.score.score === null ? [{ label: "Reason", detail: audit.score.reason }] : audit.score.factors).map((f) => (
               <div key={f.label} className="flex justify-between gap-3">
                 <dt className="text-ink-muted">{f.label}</dt>
@@ -256,7 +256,7 @@ export default function AuditResults() {
               { label: "Failed", value: failedChecks + counts.contradicted, cls: "text-bad border-bad/30" },
               { label: "Review", value: skippedChecks + counts.needs, cls: "text-warn border-warn/30" },
             ].map((s) => (
-              <div key={s.label} className={cn("rounded-xl border bg-white/[0.02] py-3", s.cls)}>
+              <div key={s.label} className={cn("rounded-xl border bg-panel py-3", s.cls)}>
                 <p className="text-xl font-bold">{s.value}</p>
                 <p className="text-[11px] text-ink-muted">{s.label}</p>
               </div>
@@ -284,7 +284,7 @@ export default function AuditResults() {
             <li className="flex gap-2"><span className="text-accent">•</span>Open high-severity findings: {openHigh}.</li>
             <li className="flex gap-2"><span className="text-accent">•</span>Approval status: {approval?.status ?? "not submitted"}.</li>
           </ul>
-          <p className="mt-3 border-t border-white/[0.07] pt-3 text-[11px] text-ink-muted">
+          <p className="mt-3 border-t border-line pt-3 text-[11px] text-ink-muted">
             The score summarises findings for triage. It does not guarantee legal compliance or factual accuracy.
           </p>
         </div>
@@ -292,7 +292,7 @@ export default function AuditResults() {
 
       {/* findings table */}
       <div className="surface overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-5 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4">
           <div>
             <h2 className="flex items-center gap-2 text-base font-semibold text-ink"><Table2 size={16} /> Findings</h2>
             <p className="text-xs text-ink-muted">Click a row to open its evidence panel</p>
@@ -300,14 +300,14 @@ export default function AuditResults() {
           <div className="flex items-center gap-2 text-ink-muted"><Filter size={14} /></div>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 border-b border-white/[0.06] px-5 py-3">
+        <div className="flex flex-wrap gap-1.5 border-b border-line px-5 py-3">
           {FILTERS.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
               className={cn(
                 "chip transition-colors",
-                filter === f.key ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink",
+                filter === f.key ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink",
               )}
               aria-pressed={filter === f.key}
             >
@@ -321,7 +321,7 @@ export default function AuditResults() {
         <div className="hidden overflow-x-auto lg:block">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-white/[0.06] text-[11px] uppercase tracking-[0.1em] text-ink-muted">
+              <tr className="border-b border-line text-[11px] uppercase tracking-[0.1em] text-ink-muted">
                 <th className="px-5 py-3 font-semibold">Status</th>
                 <th className="px-3 py-3 font-semibold">Severity</th>
                 <th className="px-3 py-3 font-semibold">Category</th>
@@ -337,7 +337,7 @@ export default function AuditResults() {
                   key={f.id}
                   onClick={() => openFinding(f.id)}
                   className={cn(
-                    "cursor-pointer border-b border-white/[0.05] transition-colors last:border-0 hover:bg-white/[0.04]",
+                    "cursor-pointer border-b border-line transition-colors last:border-0 hover:bg-panel",
                     f.reviewStatus !== "open" && "opacity-70",
                   )}
                 >
@@ -357,9 +357,9 @@ export default function AuditResults() {
         </div>
 
         {/* mobile */}
-        <div className="divide-y divide-white/[0.05] lg:hidden">
+        <div className="divide-y divide-line lg:hidden">
           {shown.map((f) => (
-            <button key={f.id} onClick={() => openFinding(f.id)} className="block w-full px-5 py-4 text-left hover:bg-white/[0.03]">
+            <button key={f.id} onClick={() => openFinding(f.id)} className="block w-full px-5 py-4 text-left hover:bg-panel">
               <div className="flex flex-wrap items-center gap-2">
                 <VerificationBadge status={f.verificationStatus} />
                 <SeverityBadge severity={f.severity} />
@@ -392,7 +392,7 @@ export default function AuditResults() {
             { icon: FileJson, label: "JSON audit data", hint: "Full structured audit including checks, limitations and content", action: () => { downloadAuditJSON(audit, brand, workspace); toast({ tone: "success", title: "JSON downloaded" }); } },
             { icon: Printer, label: "PDF report (print)", hint: "Opens your browser's print dialog — choose “Save as PDF”", action: () => { setExportOpen(false); setTimeout(() => window.print(), 150); } },
           ].map((o) => (
-            <button key={o.label} onClick={o.action} className="flex w-full items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 text-left transition-colors hover:border-accent/40">
+            <button key={o.label} onClick={o.action} className="flex w-full items-center gap-3 rounded-xl border border-line bg-panel p-4 text-left transition-colors hover:border-accent/40">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/15 text-accent"><o.icon size={17} /></span>
               <span>
                 <span className="block text-sm font-semibold text-ink">{o.label}</span>
@@ -417,7 +417,7 @@ export default function AuditResults() {
             <ol className="space-y-2">
               {STAGES.map((s, i) => (
                 <li key={s} className={cn("flex items-center gap-2 text-sm", i <= stage ? "text-ink" : "text-ink-muted")}>
-                  <span className={cn("h-2 w-2 rounded-full", i < stage ? "bg-ok" : i === stage ? "bg-accent animate-pulseSoft" : "bg-white/20")} />
+                  <span className={cn("h-2 w-2 rounded-full", i < stage ? "bg-ok" : i === stage ? "bg-accent animate-pulseSoft" : "bg-panel-2")} />
                   {s}
                 </li>
               ))}

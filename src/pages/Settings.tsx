@@ -93,13 +93,13 @@ export default function Settings() {
                     setRoleOverride(r === "ADMIN" ? null : r);
                     toast({ tone: "info", title: `Acting as ${r}`, description: r === "ADMIN" ? "Back to your assigned role." : denyReason("decide_review") === "" ? "" : "Permissions updated." });
                   }}
-                  className={cn("chip", (state.roleOverride ?? "ADMIN") === r ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted hover:text-ink")}
+                  className={cn("chip", (state.roleOverride ?? "ADMIN") === r ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted hover:text-ink")}
                 >
                   {r}
                 </button>
               ))}
             </div>
-            <div className="mt-5 border-t border-white/[0.07] pt-4">
+            <div className="mt-5 border-t border-line pt-4">
               <p className="text-xs text-ink-muted">Session</p>
               <p className="text-sm text-ink">Signed in {formatDateTime(state.session?.signedInAt)} · mode: demo (browser-local)</p>
             </div>
@@ -149,7 +149,7 @@ export default function Settings() {
                 {members.map((m) => {
                   const u = state.users.find((x) => x.id === m.userId);
                   return (
-                    <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-2.5">
+                    <li key={m.id} className="flex items-center justify-between gap-3 rounded-xl border border-line bg-panel px-3 py-2.5">
                       <div className="min-w-0">
                         <p className="truncate text-sm font-medium text-ink">{u?.name ?? "Unknown user"}</p>
                         <p className="truncate text-[11px] text-ink-muted">{u?.email}</p>
@@ -181,7 +181,7 @@ export default function Settings() {
                   <button
                     key={w.id}
                     onClick={() => { switchWorkspace(w.id); toast({ tone: "info", title: "Workspace switched", description: w.name }); }}
-                    className={cn("chip", workspace?.id === w.id ? "border-accent/50 bg-accent/15 text-accent" : "border-white/15 bg-white/5 text-ink-muted")}
+                    className={cn("chip", workspace?.id === w.id ? "border-accent/50 bg-accent/15 text-accent" : "border-line bg-panel text-ink-muted")}
                   >
                     {w.name} {w.isSample && "· sample"}
                   </button>
@@ -202,7 +202,7 @@ export default function Settings() {
           <div className="surface overflow-hidden">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06] text-[11px] uppercase tracking-[0.1em] text-ink-muted">
+                <tr className="border-b border-line text-[11px] uppercase tracking-[0.1em] text-ink-muted">
                   <th className="px-5 py-3 font-semibold">Action</th>
                   <th className="px-3 py-3 text-center font-semibold">Admin</th>
                   <th className="px-3 py-3 text-center font-semibold">Editor</th>
@@ -212,7 +212,7 @@ export default function Settings() {
               </thead>
               <tbody>
                 {ROLE_MATRIX.map((r) => (
-                  <tr key={r.action} className="border-b border-white/[0.05] last:border-0">
+                  <tr key={r.action} className="border-b border-line last:border-0">
                     <td className="px-5 py-3 text-ink">{r.action}</td>
                     {(["ADMIN", "EDITOR", "REVIEWER", "VIEWER"] as Role[]).map((roleKey) => (
                       <td key={roleKey} className="px-3 py-3 text-center">
@@ -228,7 +228,7 @@ export default function Settings() {
             <p className="flex items-center gap-2 text-sm font-semibold text-ink"><Shield size={15} className="text-accent" /> Your effective permissions</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {(["manage_workspace", "edit_brand", "run_audit", "edit_content", "submit_review", "decide_review", "configure_checklist"] as const).map((p) => (
-                <span key={p} className={cn("chip", can(p) ? "border-ok/35 bg-ok/10 text-ok" : "border-white/15 bg-white/5 text-ink-muted")}>
+                <span key={p} className={cn("chip", can(p) ? "border-ok/35 bg-ok/10 text-ok" : "border-line bg-panel text-ink-muted")}>
                   {can(p) ? "✓" : "✗"} {p.replace(/_/g, " ")}
                 </span>
               ))}
@@ -287,7 +287,7 @@ export default function Settings() {
                 ["Documents", `${state.documents.length}`],
                 ["Notifications", `${state.notifications.length}`],
               ].map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-3 border-b border-white/[0.05] pb-2 last:border-0">
+                <div key={k} className="flex justify-between gap-3 border-b border-line pb-2 last:border-0">
                   <dt className="text-ink-muted">{k}</dt>
                   <dd className="text-right font-medium text-ink">{v}</dd>
                 </div>

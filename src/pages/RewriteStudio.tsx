@@ -182,7 +182,7 @@ export default function RewriteStudio() {
           <div className="grid gap-5 lg:grid-cols-2">
             {/* original */}
             <div className="surface overflow-hidden">
-              <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-3">
+              <div className="flex items-center justify-between border-b border-line px-5 py-3">
                 <p className="text-sm font-semibold text-ink">Original content</p>
                 <span className="text-[11px] text-ink-muted">{original.trim().length} characters</span>
               </div>
@@ -202,7 +202,7 @@ export default function RewriteStudio() {
                             key={`h${e.id}`}
                             className={cn(
                               "rounded px-1",
-                              e.accepted ? "bg-bad/15 text-bad underline decoration-bad/40" : "bg-white/5 text-ink-muted line-through decoration-white/30",
+                              e.accepted ? "bg-bad/15 text-bad underline decoration-bad/40" : "bg-panel text-ink-muted line-through decoration-faint",
                             )}
                           >
                             {original.slice(e.start, e.end) || "∅"}
@@ -222,7 +222,7 @@ export default function RewriteStudio() {
 
             {/* revised */}
             <div className="surface overflow-hidden">
-              <div className="flex items-center justify-between border-b border-white/[0.07] px-5 py-3">
+              <div className="flex items-center justify-between border-b border-line px-5 py-3">
                 <p className="text-sm font-semibold text-ink">Suggested revision</p>
                 <div className="flex gap-2">
                   <button className="btn-ghost !px-2 !py-1 !text-xs" onClick={() => setManual(manual === null ? revised : null)}>
@@ -271,7 +271,7 @@ export default function RewriteStudio() {
           {/* edit list */}
           {edits && (
             <div className="surface overflow-hidden">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-5 py-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3">
                 <div>
                   <p className="text-sm font-semibold text-ink">Proposed changes ({edits.length})</p>
                   <p className="text-xs text-ink-muted">{acceptedCount} accepted · {edits.length - acceptedCount} rejected</p>
@@ -281,7 +281,7 @@ export default function RewriteStudio() {
                   <button className="btn-secondary !py-1.5 !text-xs" onClick={() => setEdits(edits.map((e) => ({ ...e, accepted: false })))}>Reject all</button>
                 </div>
               </div>
-              <ul className="divide-y divide-white/[0.05]">
+              <ul className="divide-y divide-line">
                 {edits.map((e) => {
                   const finding = e.findingId ? audit.findings.find((f) => f.id === e.findingId) : undefined;
                   return (
@@ -299,7 +299,7 @@ export default function RewriteStudio() {
                             )}
                           </div>
                           {(e.before || e.after) && (
-                            <div className="mt-2 rounded-lg border border-white/[0.07] bg-white/[0.03] p-2 font-mono text-xs">
+                            <div className="mt-2 rounded-lg border border-line bg-panel p-2 font-mono text-xs">
                               <span className="text-bad">− {e.before || "(insert)"}</span>
                               <br />
                               <span className="text-ok">+ {e.after || "(remove)"}</span>
@@ -325,7 +325,7 @@ export default function RewriteStudio() {
                   );
                 })}
               </ul>
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] px-5 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-5 py-4">
                 <p className="max-w-2xl text-[11px] leading-relaxed text-ink-muted">
                   The original content is never modified automatically. Unresolved claims stay flagged: a revision is
                   not “verified” until you run it through an audit again.
@@ -344,7 +344,7 @@ export default function RewriteStudio() {
           {edits && (
             <div className="surface p-5">
               <p className="text-sm font-semibold text-ink">Plain-text diff</p>
-              <div className="mt-2 rounded-xl border border-white/[0.07] bg-base-soft/60 p-4 font-mono text-xs leading-relaxed">
+              <div className="mt-2 rounded-xl border border-line bg-base-soft/60 p-4 font-mono text-xs leading-relaxed">
                 {diffWords(original, revised).map((d, i) => (
                   <span
                     key={i}
